@@ -6,7 +6,7 @@
 #    By: mteerlin <mteerlin@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/10/28 15:02:52 by mteerlin      #+#    #+#                  #
-#    Updated: 2021/07/28 17:12:59 by mteerlin      ########   odam.nl          #
+#    Updated: 2021/09/07 15:52:16 by mteerlin      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,9 @@ REG_OBJ		= ft_atoi.o ft_bzero.o ft_calloc.o ft_isalnum.o ft_isalpha.o \
 				ft_strlen.o ft_strmapi.o ft_strncmp.o ft_strnstr.o \
 				ft_strtrim.o ft_strrchr.o ft_substr.o ft_tolower.o \
 				ft_toupper.o
-BONUS_OBJ	= ft_atof.o ft_itoa_base.o ft_lstadd_back.o ft_lstadd_front.o \
-				ft_lstclear.o ft_lstdelone.o ft_lstiter.o ft_lstlast.o \
-				ft_lstnew.o ft_lstmap.o ft_lstsize.o
+BONUS_OBJ	= ft_atof.o ft_atol.o ft_itoa_base.o ft_lstadd_back.o \
+				ft_lstadd_front.o ft_lstclear.o ft_lstdelone.o ft_lstiter.o \
+				ft_lstlast.o ft_lstnew.o ft_lstmap.o ft_lstsize.o
 
 HEADER		= libft.h
 CFLAGS 		= -Wall -Wextra -Werror

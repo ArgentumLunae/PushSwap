@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/28 14:18:08 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/03/23 14:18:50 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/09/07 15:50:03 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_list
 }				t_list;
 
 double			ft_atof(const char *nptr);
+long int		ft_atol(const char *nptr);
 int				ft_atoi(const char *nptr);
 void			ft_bzero(void *s, size_t n);
 void			*ft_calloc(size_t nmemb, size_t size);

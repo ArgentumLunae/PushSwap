@@ -6,7 +6,7 @@
 #    By: mteerlin <mteerlin@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/07/21 12:25:06 by mteerlin      #+#    #+#                  #
-#    Updated: 2021/09/02 16:36:21 by mteerlin      ########   odam.nl          #
+#    Updated: 2021/09/07 11:55:44 by mteerlin      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,10 @@ NAME	= push_swap
 
 INCL_DIR := incl/
 HDR_DIR := hdr/
-HDR		:= $(wildcard $(HDR_DIR)*.h)
+HDR		:= pushswap.h
+SRCSFL	:= sources.txt
 SRC_DIR := src/
-TMP		:= $(wildcard $(SRC_DIR)*.c)
-SRC		:= $(TMP:$(SRC_DIR)%=%)
+SRC		:= $(shell cat $(sources.txt))
 
 OBJ_DIR := obj/
 OBJ		:= $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
@@ -29,8 +29,8 @@ CFLAGS	?= -Wall -Wextra -Werror -fsanitize=address -g
 
 all: 		$(NAME)
 
-$(NAME):	$(LIBFT) $(MLX) $(OBJ)
-			$(CC) $(CFLAGS) -L$(MLX_DIR) -lmlx -L$(LIBFT_DIR) -lft -framework OpenGL -framework AppKit $(OBJ) -o $(NAME)
+$(NAME):	$(LIBFT) $(OBJ)
+			$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 $(LIBFT):
 			$(MAKE) -C $(LIBFT_DIR) bonus
