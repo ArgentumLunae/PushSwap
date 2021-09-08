@@ -1,3 +1,0 @@
-checkargs.c
-pushswap.c
-stacks.c

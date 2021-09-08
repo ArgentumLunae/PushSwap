@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/07 11:51:36 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/09/07 15:32:39 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/09/08 17:52:01 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 int	main(int argc, char **argv)
 {
-	t_struct	*a;
+	t_stack	*a;
 
-	if (check_arguments(argc, argv) < 0)
-		;
+	check_arguments(argc, argv);
 	a = buildstack(argc, argv);
-	// sort that stuff (a);
+	if (a->size == 1)
+		return (0);
+	stk_sort(a);
 	return (0);
 }

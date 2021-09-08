@@ -6,18 +6,19 @@
 #    By: mteerlin <mteerlin@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/07/21 12:25:06 by mteerlin      #+#    #+#                  #
-#    Updated: 2021/09/07 11:55:44 by mteerlin      ########   odam.nl          #
+#    Updated: 2021/09/08 14:04:48 by mteerlin      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
+include sources.mk
+
 NAME	= push_swap
 
-INCL_DIR := incl/
+INCL_DIR := lib/
 HDR_DIR := hdr/
 HDR		:= pushswap.h
 SRCSFL	:= sources.txt
 SRC_DIR := src/
-SRC		:= $(shell cat $(sources.txt))
 
 OBJ_DIR := obj/
 OBJ		:= $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
@@ -25,12 +26,14 @@ OBJ		:= $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 LIBFT_DIR := $(INCL_DIR)libft/
 LIBFT	:= $(LIBFT_DIR)libft.a
 
-CFLAGS	?= -Wall -Wextra -Werror -fsanitize=address -g
+AR		?= ar rcs;
+LDFLAGS ?= -fsanitize=address -g
+CFLAGS	?= -Wall -Wextra -Werror
 
 all: 		$(NAME)
 
 $(NAME):	$(LIBFT) $(OBJ)
-			$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+			$(CC) $(LDFLAGS) $(LIBFT) $(OBJ) -o $(NAME)
 
 $(LIBFT):
 			$(MAKE) -C $(LIBFT_DIR) bonus
