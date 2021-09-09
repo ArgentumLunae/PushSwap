@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/07 12:39:58 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/09/08 18:37:55 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/09/09 16:07:34 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "../hdr/pushswap.h"
 #include <stdlib.h>
 #include <limits.h>
+
+#include <stdio.h>
 
 long int	get_value(char *arg)
 {
@@ -36,18 +38,37 @@ int	*get_intptr(int val)
 	return (ptr);
 }
 
+t_stack	*stk_alloc(void)
+{
+	t_stack	*stack;
+
+	stack = ft_calloc(1, sizeof(t_stack));
+	if (!stack)
+		found_error(ERR_MALLOC);
+	stack->top = NULL;
+	stack->bottom = NULL;
+	return (stack);
+}
+
 t_stack	*buildstack(int argc, char **argv)
 {
 	int			cnt;
 	long int	lval;
 	int			*val;
+	t_list		*top;
 	t_list		*lst;
 	t_stack		*stack;
 
-	stack = ft_calloc(1, sizeof(t_stack));
-	if (!stack)
-		found_error(ERR_MALLOC);
+	stack = stk_alloc();
 	cnt = 1;
+	check_isint(argv[cnt]);
+	lval = get_value(argv[cnt]);
+	val = get_intptr((int)lval);
+	top = ft_lstnew(val);
+	if (!top)
+		found_error(ERR_MALLOC);
+	stack->top = &top;
+	cnt++;
 	while (cnt < argc)
 	{
 		check_isint(argv[cnt]);
@@ -57,13 +78,11 @@ t_stack	*buildstack(int argc, char **argv)
 		if (!lst)
 			found_error(ERR_MALLOC);
 		check_dupl(stack, lst);
-		ft_lstadd_back(&stack->top, lst);
-		ft_putnbr_fd(*(int *)lst->content, 1);
-		ft_putchar_fd('\n', 1);
+		ft_lstadd_back(stack->top, lst);
 		stack->size++;
 		cnt++;
 	}
-	ft_putchar_fd('\n', 1);
-	lst->next = stack->top;
+	stack->bottom = &lst;
+	(*stack->bottom)->next = *stack->top;
 	return (stack);
 }

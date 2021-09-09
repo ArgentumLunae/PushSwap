@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pushswap.c                                         :+:    :+:            */
+/*   lists.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/09/07 11:51:36 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/09/09 16:19:03 by mteerlin      ########   odam.nl         */
+/*   Created: 2021/09/09 16:02:05 by mteerlin      #+#    #+#                 */
+/*   Updated: 2021/09/09 16:08:44 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../hdr/pushswap.h"
+#include "../lib/libft/libft.h"
 
-#include <stdio.h>
-
-int	main(int argc, char **argv)
+int	get_lstcontent(t_list lst)
 {
-	t_stack	*a;
+	int	i;
 
-	check_arguments(argc, argv);
-	a = buildstack(argc, argv);
-	if (a->size == 1)
-		return (0);
-	printf("%i\n", get_lstcontent(**a->top));
-	stk_sort(a);
-	return (0);
+	i = *(int *)lst.content;
+	return (i);
 }

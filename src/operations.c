@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/07 14:42:57 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/09/08 18:40:54 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/09/09 13:52:08 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 
 void	stk_swap(t_stack *stack)
 {
-	t_list	*temp;
+	int	tmp;
 
 	if (!stack || !stack->top)
 		return ;
-	temp = stack->top->next;
-	stack->top->next = temp->next;
-	temp->next = stack->top;
-	stack->top = temp;
+	tmp = *(int *)(*stack->top)->content;
+	*(int *)(*stack->top)->content = *(int *)(*stack->top)->next->content;
+	*(int *)(*stack->top)->next->content = tmp;
 }
 
 void	stk_push(t_stack *src, t_stack *dest)
@@ -31,28 +30,33 @@ void	stk_push(t_stack *src, t_stack *dest)
 
 	if (!src || !dest || !src->top)
 		return ;
-	temp = src->top;
-	src->top = src->top->next;
+	temp = (*src->top);
+	*src->top = (*src->top)->next;
+	(*src->bottom)->next = *src->top;
 	src->size--;
-	temp->next = dest->top;
-	dest->top = temp;
+	temp->next = *dest->top;
+	*dest->top = temp;
+	(*dest->bottom)->next = *dest->top;
 	dest->size++;
 }
 
 void	stk_rotate(t_stack *stack)
 {
-	t_list	*tmp;
-
-	tmp = stack->top->next;
-	stack->top = tmp;
+	stack->bottom = stack->top;
+	stack->top = &(*stack->top)->next;
 }
 
 void	stk_rotrev(t_stack *stack)
 {
 	t_list	*temp;
 
-	temp = stack->top;
-	while (temp->next != stack->top)
+	temp = *stack->top;
+	stack->bottom = &temp;
+	while (temp->next != *stack->top)
+	{
+		if (temp->next == *stack->bottom)
+			stack->bottom = &temp;
 		temp = temp->next;
-	stack->top = temp;
+	}
+	stack->top = &temp;
 }

@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/07 11:51:33 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/09/08 17:27:48 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/09/09 16:09:04 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef enum e_error
 
 typedef struct s_stack
 {
-	t_list	*top;
+	t_list	**top;
+	t_list	**bottom;
 	int		size;
 }	t_stack;
 
@@ -34,7 +35,10 @@ void	check_arguments(int argc, char **argv);
 void	check_isint(char *arg);
 void	check_dupl(t_stack *stack, t_list *lst);
 
+t_stack	*stk_alloc(void);
 t_stack	*buildstack(int argc, char **argv);
+
+int		get_lstcontent(t_list lst);
 
 void	stk_sort(t_stack *a);
 

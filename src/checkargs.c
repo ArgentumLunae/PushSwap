@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/07 11:59:34 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/09/08 17:32:35 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/09/09 14:20:59 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "../hdr/pushswap.h"
 #include <stdlib.h>
 #include <unistd.h>
+
+#include <stdio.h>
 
 void	found_error(int	errcode)
 {
@@ -66,7 +68,7 @@ void	check_dupl(t_stack *stack, t_list *lst)
 
 	if (!stack || !lst)
 		found_error(ERR_MALLOC);
-	tmp = stack->top;
+	tmp = *stack->top;
 	while (tmp != NULL)
 	{
 		if (*(int *)lst->content == *(int *)tmp->content)
