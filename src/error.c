@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_isdigit.c                                       :+:    :+:            */
+/*   error.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/26 14:50:46 by mteerlin      #+#    #+#                 */
-/*   Updated: 2020/10/26 15:14:52 by mteerlin      ########   odam.nl         */
+/*   Created: 2021/11/02 13:03:48 by mteerlin      #+#    #+#                 */
+/*   Updated: 2021/11/02 14:17:00 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int argi)
+#include "../incl/libft/libft.h"
+#include <stdlib.h>
+#include <unistd.h>
+
+void	found_error(int errcode)
 {
-	if ((argi >= '0') && (argi <= '9'))
-		return (2048);
-	return (0);
+	if (errcode >= 0)
+	{
+		ft_putnbr_fd(errcode, 1);
+		write(1, " Error!\n", 8);
+	}
+	exit(0);
 }

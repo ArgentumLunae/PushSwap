@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/27 19:08:49 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/03/02 13:50:39 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/10/14 17:42:41 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strnstr(const char *hay, const char *needle, size_t n)
 
 	offh = 0;
 	if (needle[0] == '\0')
-		return ((char*)hay);
+		return ((char *)hay);
 	if (n == 0)
 		return (NULL);
 	while (hay[offh] != '\0' && offh < n)

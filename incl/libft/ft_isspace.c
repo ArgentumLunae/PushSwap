@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lists.c                                            :+:    :+:            */
+/*   ft_isspace.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/09/09 16:02:05 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/09/09 16:08:44 by mteerlin      ########   odam.nl         */
+/*   Created: 2021/10/14 15:07:58 by mteerlin      #+#    #+#                 */
+/*   Updated: 2021/11/02 13:41:21 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/libft/libft.h"
-
-int	get_lstcontent(t_list lst)
+int	ft_isspace(int argi)
 {
-	int	i;
-
-	i = *(int *)lst.content;
-	return (i);
+	if ((argi > 9 && argi < 13) || argi == ' ')
+		return (1);
+	return (0);
 }

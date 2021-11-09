@@ -5,58 +5,57 @@
 /*                                                     +:+                    */
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/09/07 14:42:57 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/09/09 13:52:08 by mteerlin      ########   odam.nl         */
+/*   Created: 2021/10/13 16:54:27 by mteerlin      #+#    #+#                 */
+/*   Updated: 2021/11/09 12:59:45 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdr/pushswap.h"
-#include "../lib/libft/libft.h"
 
-void	stk_swap(t_stack *stack)
+void	swap_stk(t_stack *stk)
 {
-	int	tmp;
+	t_element	*tmp;
 
-	if (!stack || !stack->top)
+	if (stk == NULL)
 		return ;
-	tmp = *(int *)(*stack->top)->content;
-	*(int *)(*stack->top)->content = *(int *)(*stack->top)->next->content;
-	*(int *)(*stack->top)->next->content = tmp;
+	tmp = stk->top;
+	stk->top = stk->top->next;
+	tmp->next = stk->top->next;
+	stk->top->next = tmp;
 }
 
-void	stk_push(t_stack *src, t_stack *dest)
+void	push_stk(t_stack *src, t_stack *dest)
 {
-	t_list	*temp;
+	t_element	*tmp;
 
-	if (!src || !dest || !src->top)
+	if (src == NULL)
 		return ;
-	temp = (*src->top);
-	*src->top = (*src->top)->next;
-	(*src->bottom)->next = *src->top;
-	src->size--;
-	temp->next = *dest->top;
-	*dest->top = temp;
-	(*dest->bottom)->next = *dest->top;
-	dest->size++;
+	tmp = pop_elem(src);
+	push_elem(tmp, dest);
 }
 
-void	stk_rotate(t_stack *stack)
+void	rotate_stk(t_stack *stk)
 {
-	stack->bottom = stack->top;
-	stack->top = &(*stack->top)->next;
+	t_element	*tmp;
+
+	if (stk == NULL)
+		return ;
+	tmp = pop_elem(stk);
+	stk->bottom->next = tmp;
+	stk->bottom = stk->bottom->next;
 }
 
-void	stk_rotrev(t_stack *stack)
+void	rev_rotate_stk(t_stack *stk)
 {
-	t_list	*temp;
+	t_element	*tmp;
 
-	temp = *stack->top;
-	stack->bottom = &temp;
-	while (temp->next != *stack->top)
-	{
-		if (temp->next == *stack->bottom)
-			stack->bottom = &temp;
-		temp = temp->next;
-	}
-	stack->top = &temp;
+	if (stk == NULL)
+		return ;
+	tmp = stk->top;
+	while (tmp->next != stk->bottom)
+		tmp = tmp->next;
+	stk->bottom = tmp;
+	tmp = tmp->next;
+	stk->bottom->next = NULL;
+	push_elem(tmp, stk);
 }

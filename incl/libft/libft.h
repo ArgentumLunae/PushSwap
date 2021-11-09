@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/28 14:18:08 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/09/07 15:50:03 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/10/14 15:08:29 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int				ft_isalpha(int argi);
 int				ft_isascii(int argi);
 int				ft_isdigit(int argi);
 int				ft_isprint(int argi);
+int				ft_isspace(int argi);
 char			*ft_itoa_base(long long int nbr, unsigned int base);
 char			*ft_itoa(int n);
 void			ft_lstadd_back(t_list **lst, t_list *new);

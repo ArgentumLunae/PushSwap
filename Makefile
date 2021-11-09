@@ -6,7 +6,7 @@
 #    By: mteerlin <mteerlin@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/07/21 12:25:06 by mteerlin      #+#    #+#                  #
-#    Updated: 2021/09/08 14:04:48 by mteerlin      ########   odam.nl          #
+#    Updated: 2021/11/02 13:40:40 by mteerlin      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ include sources.mk
 
 NAME	= push_swap
 
-INCL_DIR := lib/
+INCL_DIR := incl/
 HDR_DIR := hdr/
 HDR		:= pushswap.h
 SRCSFL	:= sources.txt
