@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pop_push.c                                         :+:    :+:            */
+/*   rotate.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/13 16:47:58 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/12/08 18:43:30 by mteerlin      ########   odam.nl         */
+/*   Created: 2021/12/05 11:47:16 by mteerlin      #+#    #+#                 */
+/*   Updated: 2021/12/08 15:23:21 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdr/pushswap.h"
+#include <unistd.h>
 
-t_element	*pop_elem(t_stack *stk)
+void	rot_a(t_stack *stk)
 {
-	t_element	*ret;
-
-	if (!stk->top)
-		return (NULL);
-	ret = stk->top;
-	stk->top = stk->top->next;
-	stk->size--;
-	ret->next = NULL;
-	return (ret);
+	if (!stk || !stk->top || !stk->bottom)
+		return ;
+	rotate_stk(stk);
+	write(1, "ra\n", 3);
 }
 
-void	push_elem(t_element *elem, t_stack *stk)
+void	rot_b(t_stack *stk)
 {
-	if (!elem || !stk)
+	if (!stk || !stk->top || !stk->bottom)
 		return ;
-	elem->next = stk->top;
-	stk->top = elem;
-	if (!elem->next)
-		stk->bottom = stk->top;
-	stk->size++;
+	rotate_stk(stk);
+	write(1, "rb\n", 3);
+}
+
+void	rot_rr(t_stack *a, t_stack *b)
+{
+	rotate_stk(a);
+	rotate_stk(b);
+	write(1, "rr\n", 3);
 }

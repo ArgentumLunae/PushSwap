@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   operations.c                                       :+:    :+:            */
+/*   base_operations.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/13 16:54:27 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/11/09 12:59:45 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/12/08 18:46:11 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdr/pushswap.h"
+#include <stdio.h>
 
 void	swap_stk(t_stack *stk)
 {
@@ -28,7 +29,7 @@ void	push_stk(t_stack *src, t_stack *dest)
 {
 	t_element	*tmp;
 
-	if (src == NULL)
+	if (src == NULL || src->top == NULL)
 		return ;
 	tmp = pop_elem(src);
 	push_elem(tmp, dest);
@@ -43,6 +44,7 @@ void	rotate_stk(t_stack *stk)
 	tmp = pop_elem(stk);
 	stk->bottom->next = tmp;
 	stk->bottom = stk->bottom->next;
+	stk->size++;
 }
 
 void	rev_rotate_stk(t_stack *stk)
@@ -57,5 +59,6 @@ void	rev_rotate_stk(t_stack *stk)
 	stk->bottom = tmp;
 	tmp = tmp->next;
 	stk->bottom->next = NULL;
+	stk->size--;
 	push_elem(tmp, stk);
 }

@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/02 16:02:09 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/11/09 17:05:18 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/12/08 17:35:52 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,32 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void	sort_small(t_stack *a)
+void	sort_small(t_stack *stk, t_func func, int ab)
 {
+	if (!stk || !stk->top)
+		return ;
 	while (1)
 	{
-		if (a->top->content > a->bottom->content)
+		if (stk->top->content > stk->bottom->content)
 		{
-			if (a->top->content < a->top->next->content)
-			{
-				rev_rotate_stk(a);
-				write(1, "rra\n", 4);
-			}
+			if (stk->top->content < stk->top->next->content)
+				func.rrot[ab](stk);
 			else
-			{
-				rotate_stk(a);
-				write(1, "ra\n", 3);
-			}
+				func.rot[ab](stk);
 		}
-		else if (a->top->content > a->top->next->content || \
-					a->top->next->content > a->bottom->content)
-		{
-			swap_stk(a);
-			write(1, "sa\n", 3);
-		}
+		else if (stk->top->content > stk->top->next->content || \
+					stk->top->next->content > stk->bottom->content)
+			func.swap[ab](stk);
 		else
 			break ;
 	}
 }
 
-t_stack	sort_stk(t_stack a)
+t_stack	sort_stk(t_stack a, t_func func)
 {
 	if (a.size <= 3)
-		sort_small(&a);
-	//else
-	//	sort_huge(&a);
+		sort_small(&a, func, A);
+	else
+		sort_huge(&a, func);
 	return (a);
 }
