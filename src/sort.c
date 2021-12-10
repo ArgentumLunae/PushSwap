@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/02 16:02:09 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/12/08 17:35:52 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/12/10 15:55:02 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	sort_small(t_stack *stk, t_func func, int ab)
 {
-	if (!stk || !stk->top)
+	if (!stk || !stk->top || !stk->top->next)
 		return ;
 	while (1)
 	{

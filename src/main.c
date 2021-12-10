@@ -6,18 +6,21 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/11 17:13:54 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/12/05 14:08:49 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/12/10 16:07:42 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdr/pushswap.h"
 #include "../incl/libft/libft.h"
 #include <unistd.h>
+#include <stdio.h>
 
 static void	print_stk(t_stack *stk)
 {
 	t_element	*temp;
 
+	if (!stk || !stk->top)
+		return ;
 	temp = stk->top;
 	write(1, "top:\t", 5);
 	ft_putnbr_fd(stk->top->content, 1);
@@ -62,6 +65,7 @@ int	main(int argc, char **argv)
 	a = build_stk(argc, argv);
 	index_stk(&a);
 	a = sort_stk(a, func);
+	printf("stack A\n");
 	print_stk(&a);
 	stkclear(&(a.top));
 	return (0);

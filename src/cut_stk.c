@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/05 11:07:41 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/12/08 18:40:12 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/12/10 17:22:27 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,46 @@ static int	find_pivot(t_stack *stk, int n)
 	return (((max - min) / 2) + min);
 }
 
-void	cutnstk(t_stack *a, t_stack *b, int n, int ab)
+int	cutnstk(t_stack *a, t_stack *b, int n, int ab)
 {
 	int	pivot;
 	int	cnt;
+	int	cnt2;
 
-	if (!a || !b)
-		return ;
+	if (!a || !b || n > a->size + b->size)
+		return (0);
 	cnt = 0;
-	pivot = find_pivot(a, n);
+	if (ab == A)
+		pivot = find_pivot(a, n);
+	else
+		pivot = find_pivot(b, n);
+	printf("pivot = %d\n", pivot);
+	cnt2 = 0;
 	while (ab && cnt < n)
 	{
-		printf("top B = %p\n", b->top);
-		if (b->top->index >= pivot)
-			push_a(a, b);
+		if (b->top->index > pivot)
+		{
+			push_a(b, a);
+			cnt2++;
+		}
 		else
-			rot_b(a);
+			rot_b(b);
 		cnt++;
+		if (cnt2 > n / 2)
+			break ;
 	}
 	while (!ab && cnt < n)
 	{
 		if (n <= 3 || a->top->index <= pivot)
+		{
 			push_b(a, b);
+			cnt2++;
+		}
 		else
 			rot_a(a);
 		cnt++;
+		if (n > 3 && cnt2 > n - (n / 2))
+			break ;
 	}
+	return (cnt - cnt2);
 }

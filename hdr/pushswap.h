@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/07 11:51:33 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/12/08 17:18:48 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/12/10 15:02:00 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_stack		init_stk(void);
 t_stack		build_stk(int argc, char **argv);
 void		index_stk(t_stack *stk);
 
-void		cutnstk(t_stack *a, t_stack *b, int n, int ab);
+int			cutnstk(t_stack *a, t_stack *b, int n, int ab);
 
 t_stack		sort_stk(t_stack a, t_func func);
 void		sort_small(t_stack *stk, t_func func, int ab);

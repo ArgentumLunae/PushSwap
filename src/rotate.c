@@ -6,12 +6,13 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/05 11:47:16 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/12/08 15:23:21 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/12/10 14:54:35 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdr/pushswap.h"
 #include <unistd.h>
+#include <stdio.h>
 
 void	rot_a(t_stack *stk)
 {
