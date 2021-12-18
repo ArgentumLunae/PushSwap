@@ -6,11 +6,12 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/13 16:47:58 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/12/08 18:43:30 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/12/18 14:56:15 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdr/pushswap.h"
+#include <stddef.h>
 
 t_element	*pop_elem(t_stack *stk)
 {

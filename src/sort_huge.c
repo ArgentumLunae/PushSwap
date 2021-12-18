@@ -6,11 +6,12 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/09 17:02:48 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/12/10 17:53:11 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/12/18 15:44:53 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdr/pushswap.h"
+#include "../incl/libft/libft.h"
 #include <unistd.h>
 #include <stdio.h>
 
@@ -84,25 +85,10 @@ void	sort_b(t_stack *a, t_stack *b, t_func func, int leftovers)
 		printf("Bsize <= 6\n");
 		leftovers = b->size - b->size / 2;
 		cutnstk(a, b, b->size, B);
-		printf("Stack A\n");
-		print_stk(a);
-		printf("Stack B\n");
-		print_stk(b);
 		sort_small(b, func, B);
-		printf("Stack B\n");
-		print_stk(b);
 		empty_b(a, b, func);
 		refill_b(a, b, leftovers, func);
-		printf("Stack A\n");
-		print_stk(a);
-		printf("Stack B\n");
-		print_stk(b);
 		sort_small(b, func, B);
-		printf("Stack B\n");
-		print_stk(b);
-		empty_b(a, b, func);
-		printf("Stack A\n");
-		print_stk(a);
 		leftovers = 0;
 		return ;
 	}
@@ -117,13 +103,11 @@ void	sort_b(t_stack *a, t_stack *b, t_func func, int leftovers)
 	}
 	if (leftovers)
 	{
-		printf("leftovers = %d\n", leftovers);
 		rev = cutnstk(a, b, leftovers, A);
 		if (leftovers > 1)
 			leftovers = leftovers / 2;
 		else
 			leftovers = 0;
-		printf("leftovers = %d\n", leftovers);
 		cnt = 0;
 		while (cnt < rev)
 		{
@@ -134,42 +118,55 @@ void	sort_b(t_stack *a, t_stack *b, t_func func, int leftovers)
 	}
 }
 
+void	quarter_stk(t_stack *a, t_stack *b)
+{
+	int	pivots[3];
+	int	cnt;
+
+	if (!a || !b)
+		return ;
+	pivots[1] = (a->size - 1) / 2; //rounded down
+	pivots[0] = pivots[1] / 2; //rounded down
+	pivots[2] = (pivots[1] + a->size) / 2; // rounded down
+	cnt = 0;
+	printf("pivots [%d, %d, %d]\n", pivots[0], pivots[1], pivots[2]);
+	while (b->size <= pivots[1])
+	{
+		printf("Size A:\t%d\nSize B:\t%d\n", a->size, b->size);
+		//printf("pivots[1]:\t%d\n", pivots[1]);
+		if (a->top->index <= pivots[1])
+			push_b(a, b);
+		else
+			rot_a(a);
+		cnt++;
+	}
+}
+
 void	sort_huge(t_stack *a, t_func func)
 {
 	t_stack	b;
 	int		leftovers;
 	int		cut;
-	int		cnt;
-	int		rev;
+	// int		cnt;
+	// int		rev;
 
 	b = init_stk();
 	cut = a->size;
 	leftovers = cut / 2;
-	printf("TOTAL SIZE: %d\n", a->size);
-	while (leftovers > 1)
-	{
-		printf("Stack A\n");
-		print_stk(a);
-		printf("Cut from A: %d\n", cut);
-		printf("LEFTOVERS: %d\n", leftovers);
-		rev = cutnstk(a, &b, cut, A);
-		cnt = 0;
-		printf("Stack A\n");
-		print_stk(a);
-		printf("leftovers = %d\n", leftovers);
-		printf("how many need reversing? %d\n", rev);
-		while (cut < a->size && rev && cnt < rev)
-		{
-			revrot_a(a);
-			cnt++;
-		}
-		printf("Stack A\n");
-		print_stk(a);
-		sort_b(a, &b, func, leftovers);
-		cut = leftovers;
-		leftovers = cut / 2;
-	}
-	printf("leftovers = %d\n", leftovers);
-	empty_b(a, &b, func);
-	stkclear(&b.top);
+	quarter_stk(a, &b);
+	// while (leftovers > 1)
+	// {
+	// 	rev = cutnstk(a, &b, cut, A);
+	// 	cnt = 0;
+	// 	while (cut < a->size && rev && cnt < rev)
+	// 	{
+	// 		revrot_a(a);
+	// 		cnt++;
+	// 	}
+	// 	sort_b(a, &b, func, leftovers);
+	// 	cut = leftovers;
+	// 	leftovers = cut / 2;
+	// }
+	//empty_b(a, &b, func);
+	//stkclear(&b.top);
 }

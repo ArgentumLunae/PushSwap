@@ -6,7 +6,7 @@
 #    By: mteerlin <mteerlin@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/07/21 12:25:06 by mteerlin      #+#    #+#                  #
-#    Updated: 2021/11/02 13:40:40 by mteerlin      ########   odam.nl          #
+#    Updated: 2021/12/18 15:32:14 by mteerlin      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ $(LIBFT):
 
 $(OBJ_DIR)%.o:		$(SRC_DIR)%.c $(HDR_DIR)$(HDR)
 			@mkdir -p $(dir $@)
-			$(CC) $(CFLAGS) -c $< -o $@
+			$(CC) -c $< -o $@
 
 clean:
 			rm -f $(OBJ_DIR)*.o $(LIBFT_DIR)*.o $(MLX_DIR)*.o

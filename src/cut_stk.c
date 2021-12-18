@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/05 11:07:41 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/12/10 17:22:27 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/12/18 15:08:06 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	cutnstk(t_stack *a, t_stack *b, int n, int ab)
 		pivot = find_pivot(a, n);
 	else
 		pivot = find_pivot(b, n);
-	printf("pivot = %d\n", pivot);
 	cnt2 = 0;
 	while (ab && cnt < n)
 	{
