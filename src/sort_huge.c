@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/09 17:02:48 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/12/10 17:53:11 by mteerlin      ########   odam.nl         */
+/*   Updated: 2021/12/14 16:04:34 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	sort_b(t_stack *a, t_stack *b, t_func func, int leftovers)
 	printf("Stack B\n");
 	printf("size = %d\n", b->size);
 	print_stk(b);
-	if (leftovers == 1)
+	if (leftovers <= 1)
 		leftovers = 0;
 	if (b->size <= 3)
 	{
@@ -81,8 +81,8 @@ void	sort_b(t_stack *a, t_stack *b, t_func func, int leftovers)
 	}
 	else if (b->size <= 6)
 	{
-		printf("Bsize <= 6\n");
-		leftovers = b->size - b->size / 2;
+		printf("Bsize = %d\n", b->size);
+		leftovers = b->size / 2;
 		cutnstk(a, b, b->size, B);
 		printf("Stack A\n");
 		print_stk(a);
@@ -92,6 +92,7 @@ void	sort_b(t_stack *a, t_stack *b, t_func func, int leftovers)
 		printf("Stack B\n");
 		print_stk(b);
 		empty_b(a, b, func);
+		printf("LEFTOVERS: %d\n", leftovers);
 		refill_b(a, b, leftovers, func);
 		printf("Stack A\n");
 		print_stk(a);
@@ -109,7 +110,7 @@ void	sort_b(t_stack *a, t_stack *b, t_func func, int leftovers)
 	else
 	{
 		if (leftovers > 1)
-			leftovers = b->size - b->size / 2;
+			leftovers = b->size / 2;
 		else
 			leftovers = 0;
 		cutnstk(a, b, b->size, B);

@@ -6,7 +6,7 @@
 #    By: mteerlin <mteerlin@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/07/21 12:25:06 by mteerlin      #+#    #+#                  #
-#    Updated: 2021/11/02 13:40:40 by mteerlin      ########   odam.nl          #
+#    Updated: 2021/12/14 15:27:26 by mteerlin      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,13 +27,14 @@ LIBFT_DIR := $(INCL_DIR)libft/
 LIBFT	:= $(LIBFT_DIR)libft.a
 
 AR		?= ar rcs;
-LDFLAGS ?= -fsanitize=address -g
+SANFLAGS ?= -fsanitize=address -g
 CFLAGS	?= -Wall -Wextra -Werror
 
 all: 		$(NAME)
 
 $(NAME):	$(LIBFT) $(OBJ)
-			$(CC) $(LDFLAGS) $(LIBFT) $(OBJ) -o $(NAME)
+#			$(CC) $(CFLAGS) $(SANFLAGS) $(LIBFT) $(OBJ) -o $(NAME)
+			$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) -lft -o $(NAME)
 
 $(LIBFT):
 			$(MAKE) -C $(LIBFT_DIR) bonus
