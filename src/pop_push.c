@@ -6,15 +6,16 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/13 16:47:58 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/12/08 18:43:30 by mteerlin      ########   odam.nl         */
+/*   Updated: 2022/01/06 15:21:10 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdr/pushswap.h"
+#include <stddef.h>
 
-t_element	*pop_elem(t_stack *stk)
+t_elem	*pop_elem(t_stk *stk)
 {
-	t_element	*ret;
+	t_elem	*ret;
 
 	if (!stk->top)
 		return (NULL);
@@ -25,13 +26,13 @@ t_element	*pop_elem(t_stack *stk)
 	return (ret);
 }
 
-void	push_elem(t_element *elem, t_stack *stk)
+void	push_elem(t_elem *elem, t_stk *stk)
 {
 	if (!elem || !stk)
 		return ;
 	elem->next = stk->top;
 	stk->top = elem;
 	if (!elem->next)
-		stk->bottom = stk->top;
+		stk->bot = stk->top;
 	stk->size++;
 }

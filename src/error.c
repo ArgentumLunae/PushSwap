@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/02 13:03:48 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/11/16 14:17:21 by mteerlin      ########   odam.nl         */
+/*   Updated: 2022/01/17 16:49:26 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@
 void	found_error(int errcode)
 {
 	if (errcode >= 0)
-	{
-		ft_putnbr_fd(errcode, 1);
-		write(1, " Error!\n", 8);
-	}
+		write(1, "Error\n", 6);
 	exit(0);
 }
 
@@ -36,7 +33,7 @@ int	check_arg(char *arg)
 	{
 		if ((arg[cnt] != '+' && arg[cnt] != '-') || len <= 1)
 		{
-			found_error(ERR_NO_INT);
+			found_error(ERR_NOT_INT);
 			return (0);
 		}
 	}
@@ -45,7 +42,7 @@ int	check_arg(char *arg)
 	{
 		if (!ft_isdigit(arg[cnt]))
 		{
-			found_error(ERR_NO_INT);
+			found_error(ERR_NOT_INT);
 			return (0);
 		}
 		cnt++;
@@ -53,9 +50,9 @@ int	check_arg(char *arg)
 	return (1);
 }
 
-void	check_doubles(int new, t_element *stk)
+void	check_doubles(int new, t_elem *stk)
 {
-	t_element	*temp;
+	t_elem	*temp;
 
 	temp = stk;
 	while (temp != NULL)

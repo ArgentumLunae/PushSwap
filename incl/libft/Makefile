@@ -6,7 +6,7 @@
 #    By: mteerlin <mteerlin@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/10/28 15:02:52 by mteerlin      #+#    #+#                  #
-#    Updated: 2021/10/25 10:14:32 by mteerlin      ########   odam.nl          #
+#    Updated: 2022/01/06 13:56:47 by mteerlin      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,26 +36,26 @@ endif
 all: 		$(NAME)
 
 $(NAME):	$(OBJECTS)
-				ar rcs $(NAME) $(OBJECTS)
+			@ar rcs $(NAME) $(OBJECTS)
 
 %.o:		%.c $(HEADER)
 			@$(CC) -c $(CFLAGS) -o $@ $<
 
 bonus:
-			$(MAKE) WITH_BONUS=1 all
+			@$(MAKE) WITH_BONUS=1 all
 
 so:
-			$(CC) -shared -o libft.so -fPIC $(OBJECTS)
+			@$(CC) -shared -o libft.so -fPIC $(OBJECTS)
 
 clean:
-			rm -f *.o *.so
+			@rm -f *.o *.so
 
 fclean:
-			$(MAKE) clean
-			rm -f $(NAME)
+			@$(MAKE) clean
+			@rm -f $(NAME)
 
 re:
-			$(MAKE) fclean
-			$(MAKE) all
+			@$(MAKE) fclean
+			@$(MAKE) all
 
 .PHONY:		all clean fclean re

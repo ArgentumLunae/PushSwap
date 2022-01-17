@@ -6,59 +6,106 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/13 16:54:27 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/12/08 18:46:11 by mteerlin      ########   odam.nl         */
+/*   Updated: 2022/01/07 15:08:18 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdr/pushswap.h"
-#include <stdio.h>
+#include <stddef.h>
 
-void	swap_stk(t_stack *stk)
+void	swap_stk(t_stk *stk[2], int type)
 {
-	t_element	*tmp;
+	t_elem	*tmp;
+	int		rep;
 
 	if (stk == NULL)
 		return ;
-	tmp = stk->top;
-	stk->top = stk->top->next;
-	tmp->next = stk->top->next;
-	stk->top->next = tmp;
+	prnt_swap(type);
+	if (type == SIM)
+	{
+		rep = 2;
+		type--;
+	}
+	else
+		rep = 1;
+	while (rep > 0)
+	{
+		tmp = stk[type]->top;
+		stk[type]->top = stk[type]->top->next;
+		tmp->next = stk[type]->top->next;
+		stk[type]->top->next = tmp;
+		type--;
+		rep--;
+	}
 }
 
-void	push_stk(t_stack *src, t_stack *dest)
+void	push_stk(t_stk	*stk[2], int type)
 {
-	t_element	*tmp;
+	t_elem	*tmp;
+	int		src;
 
-	if (src == NULL || src->top == NULL)
+	if (!stk || type > 1)
 		return ;
-	tmp = pop_elem(src);
-	push_elem(tmp, dest);
+	if (type == A)
+		src = B;
+	else
+		src = A;
+	tmp = pop_elem(stk[src]);
+	push_elem(tmp, stk[type]);
+	prnt_push(type);
 }
 
-void	rotate_stk(t_stack *stk)
+void	rotate_stk(t_stk *stk[2], int type)
 {
-	t_element	*tmp;
+	t_elem	*tmp;
+	int		rep;
 
 	if (stk == NULL)
 		return ;
-	tmp = pop_elem(stk);
-	stk->bottom->next = tmp;
-	stk->bottom = stk->bottom->next;
-	stk->size++;
+	prnt_rot(type);
+	if (type == SIM)
+	{
+		rep = 2;
+		type--;
+	}
+	else
+		rep = 1;
+	while (rep > 0)
+	{
+		tmp = pop_elem(stk[type]);
+		stk[type]->bot->next = tmp;
+		stk[type]->bot = stk[type]->bot->next;
+		stk[type]->size++;
+		type--;
+		rep--;
+	}
 }
 
-void	rev_rotate_stk(t_stack *stk)
+void	rev_rotate_stk(t_stk *stk[2], int type)
 {
-	t_element	*tmp;
+	t_elem	*tmp;
+	int		rep;
 
 	if (stk == NULL)
 		return ;
-	tmp = stk->top;
-	while (tmp->next != stk->bottom)
+	prnt_rrot(type);
+	rep = 1;
+	if (type == SIM)
+	{
+		rep = 2;
+		type--;
+	}
+	while (rep > 0)
+	{
+		tmp = stk[type]->top;
+		while (tmp->next != stk[type]->bot)
+			tmp = tmp->next;
+		stk[type]->bot = tmp;
 		tmp = tmp->next;
-	stk->bottom = tmp;
-	tmp = tmp->next;
-	stk->bottom->next = NULL;
-	stk->size--;
-	push_elem(tmp, stk);
+		stk[type]->bot->next = NULL;
+		stk[type]->size--;
+		push_elem(tmp, stk[type]);
+		type--;
+		rep--;
+	}
 }
