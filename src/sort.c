@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/02 16:02:09 by mteerlin      #+#    #+#                 */
-/*   Updated: 2022/01/18 13:44:50 by mteerlin      ########   odam.nl         */
+/*   Updated: 2022/01/18 17:43:55 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	hex_sort(t_stk *stk[2])
 		else
 			rotate_stk(stk, A);
 	}
-	tri_sort(stk, SIM);
+	if (size > 4)
+		tri_sort(stk, SIM);
+	else
+		tri_sort(stk, A);
 	empty_b(stk);
 }
 

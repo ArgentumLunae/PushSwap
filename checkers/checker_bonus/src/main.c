@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:33:53 by mteerlin      #+#    #+#                 */
-/*   Updated: 2022/01/18 17:01:38 by mteerlin      ########   odam.nl         */
+/*   Updated: 2022/01/18 18:21:21 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,22 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-static void	command_list(char *(*commands)[11])
+#include <stdio.h>
+
+static char	**command_list(char *commands[11])
 {
-	*commands[0] = "sa";
-	*commands[1] = "sb";
-	*commands[2] = "ss";
-	*commands[3] = "ra";
-	*commands[4] = "rb";
-	*commands[5] = "rr";
-	*commands[6] = "rra";
-	*commands[7] = "rrb";
-	*commands[8] = "rrr";
-	*commands[9] = "pa";
-	*commands[10] = "pb";
+	commands[0] = "sa";
+	commands[1] = "sb";
+	commands[2] = "ss";
+	commands[3] = "ra";
+	commands[4] = "rb";
+	commands[5] = "rr";
+	commands[6] = "rra";
+	commands[7] = "rrb";
+	commands[8] = "rrr";
+	commands[9] = "pa";
+	commands[10] = "pb";
+	return (commands);
 }
 
 static t_func	*list_functions(t_func *func)
@@ -41,14 +44,16 @@ static t_func	*list_functions(t_func *func)
 	return (func);
 }
 
-static int	validate_command(char *command, char **commands)
+static int	validate_command(char *command, char *commands[11])
 {
 	int	cnt;
+	int	len;
 
 	cnt = 0;
 	while (cnt < 11)
 	{
-		if (!ft_strncmp(command, commands[cnt], 4))
+		len = ft_strlen(commands[cnt]);
+		if (!ft_strncmp(command, commands[cnt], len))
 			return (cnt);
 		cnt++;
 	}
@@ -58,14 +63,15 @@ static int	validate_command(char *command, char **commands)
 int	main(int argc, char **argv)
 {
 	char	*command;
-	char	*commands[11];
+	char	**commands;
 	t_func	*func;
 	t_stk	*stk[2];
 	int		commandnr;
 
 	if (argc < 2)
 		return (1);
-	command_list(&commands);
+	commands = malloc(11 * sizeof(char *));
+	commands = command_list(commands);
 	func = malloc(4 * sizeof(t_func));
 	func = list_functions(func);
 	stk[A] = build_stk(argc, argv);
@@ -78,10 +84,11 @@ int	main(int argc, char **argv)
 		else
 			func[commandnr / 3](stk, (commandnr % 3));
 	}
-	if (stk[B]->size == 0 && is_sorteda(stk[A]))
+	if (is_sorteda(stk[A]))
 		write(1, "OK\n", 3);
 	else
 		write(1, "KO\n", 3);
+	free (commands);
 	free(func);
 	return (0);
 }
