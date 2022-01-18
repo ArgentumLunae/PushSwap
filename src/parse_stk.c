@@ -6,15 +6,16 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/13 16:45:27 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/12/05 13:44:01 by mteerlin      ########   odam.nl         */
+/*   Updated: 2022/01/17 16:42:27 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdr/pushswap.h"
 #include "../incl/libft/libft.h"
 #include <limits.h>
+#include <stdlib.h>
 
-int	conv_arg(char *arg)
+static int	conv_arg(char *arg)
 {
 	long	ret;
 
@@ -24,43 +25,70 @@ int	conv_arg(char *arg)
 	return ((int)ret);
 }
 
-t_stack	init_stk(void)
+static void	add_element(char *arg, t_stk *stk)
 {
-	t_stack	stk;
+	int		content;
+	t_elem	*new_elem;
 
-	stk.top = NULL;
-	stk.bottom = NULL;
-	stk.size = 0;
-	return (stk);
-}
-
-void	add_element(int content, t_stack *stk)
-{
-	t_element	*new_elem;
-
-	check_doubles(content, stk->top);
-	new_elem = stknew(content);
-	stkadd_back(&(stk->top), new_elem);
-	stk->size++;
-}
-
-t_stack	build_stk(int argc, char **argv)
-{
-	int			cnt;
-	int			content;
-	t_stack		stk;
-
-	cnt = 1;
-	stk = init_stk();
-	while (cnt < argc)
+	if (check_arg(arg))
 	{
-		if (check_arg(argv[cnt]))
-		{
-			content = conv_arg(argv[cnt]);
-			add_element(content, &stk);
-		}
+		content = conv_arg(arg);
+		check_doubles(content, stk->top);
+		new_elem = stknew(content);
+		stkadd_back(&(stk->top), new_elem);
+		stk->size++;
+	}
+}
+
+static int	split_arg(char **argv, char ***arg)
+{
+	int	cnt;
+
+	cnt = 0;
+	*arg = ft_split(argv[1], ' ');
+	while ((*arg)[cnt] != NULL)
+	{
 		cnt++;
 	}
-	stk.bottom = stklast(stk.top);
+	return (cnt);
+}
+
+static void	free_split(char ***split)
+{
+	int	cnt;
+
+	cnt = 0;
+	while ((*split)[cnt])
+	{
+		free((*split)[cnt]);
+		cnt++;
+	}
+	free(*split);
+}
+
+t_stk	*build_stk(int argc, char **argv)
+{
+	char		**arg;
+	int			cnt;
+	int			end;
+	t_stk		*stk;
+
+	stk = init_stk();
+	if (argc == 2)
+		end = split_arg(argv, &arg);
+	else
+	{
+		arg = &(argv[1]);
+		end = argc - 1;
+	}
+	cnt = 0;
+	while (cnt < end)
+	{
+		add_element(arg[cnt], stk);
+		cnt++;
+	}
+	stk->bot = stklast(stk->top);
+	if (argc == 2)
+		free_split(&arg);
 	return (stk);
 }

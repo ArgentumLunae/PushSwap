@@ -6,18 +6,18 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/25 09:30:14 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/11/02 14:02:32 by mteerlin      ########   odam.nl         */
+/*   Updated: 2022/01/06 15:54:27 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../hdr/pushswap.h"
 
-t_element	*stknew(int content)
+t_elem	*stknew(int content)
 {
-	t_element	*new;
+	t_elem	*new;
 
-	new = (t_element *)malloc(sizeof(t_element));
+	new = (t_elem *)malloc(sizeof(t_elem));
 	if (new == NULL)
 		return (NULL);
 	new->content = content;
@@ -25,7 +25,7 @@ t_element	*stknew(int content)
 	return (new);
 }
 
-t_element	*stklast(t_element *stk)
+t_elem	*stklast(t_elem *stk)
 {
 	if (stk == NULL)
 		return (NULL);
@@ -34,9 +34,9 @@ t_element	*stklast(t_element *stk)
 	return (stk);
 }
 
-void	stkadd_back(t_element **stk, t_element *new)
+void	stkadd_back(t_elem **stk, t_elem *new)
 {
-	t_element	*last;
+	t_elem	*last;
 
 	if (*stk == NULL)
 	{
@@ -48,15 +48,25 @@ void	stkadd_back(t_element **stk, t_element *new)
 	return ;
 }
 
-void	stkclear(t_element **stk)
+void	stkclear(t_stk *stk[2])
 {
-	t_element	*temp;
+	t_elem	*temp;
 
-	while (*stk != NULL && stk != NULL)
+	if (!stk)
+		return ;
+	while (stk[A]->top)
 	{
-		temp = (*stk)->next;
-		free(*stk);
-		*stk = temp;
+		temp = stk[A]->top->next;
+		free(stk[A]->top);
+		stk[A]->top = temp;
 	}
+	while (stk[B]->top)
+	{
+		temp = stk[B]->top->next;
+		free(stk[B]->top);
+		stk[B]->top = temp;
+	}
+	free(stk[A]);
+	free(stk[B]);
 	return ;
 }

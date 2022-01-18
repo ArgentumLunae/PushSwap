@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/24 15:17:24 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/11/30 11:16:45 by mteerlin      ########   odam.nl         */
+/*   Updated: 2022/01/06 15:31:34 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-t_branch	*new_branch(t_branch *parent, t_element *elem)
+t_branch	*new_branch(t_branch *parent, t_elem *elem)
 {
 	t_branch	*branch;
 
@@ -28,7 +28,7 @@ t_branch	*new_branch(t_branch *parent, t_element *elem)
 	return (branch);
 }
 
-void	place_branch(t_branch *parent, t_element *elem)
+static void	place_branch(t_branch *parent, t_elem *elem)
 {
 	if (!parent)
 		found_error(ERR_MALLOC);
@@ -48,9 +48,9 @@ void	place_branch(t_branch *parent, t_element *elem)
 	}
 }
 
-t_branch	*build_tree(t_element *top)
+static t_branch	*build_tree(t_elem *top)
 {
-	t_element	*elem;
+	t_elem		*elem;
 	t_branch	*root;
 
 	elem = top;
@@ -64,7 +64,7 @@ t_branch	*build_tree(t_element *top)
 	return (root);
 }
 
-void	index_tree(t_branch *branch, int *index)
+static void	index_tree(t_branch *branch, int *index)
 {
 	if (branch->left)
 		index_tree(branch->left, index);
@@ -82,7 +82,7 @@ void	index_tree(t_branch *branch, int *index)
 		index_tree(branch->right, index);
 }
 
-void	index_stk(t_stack *stk)
+void	index_stk(t_stk *stk)
 {
 	t_branch	*tree;
 	int			index;

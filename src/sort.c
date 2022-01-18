@@ -6,40 +6,43 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/02 16:02:09 by mteerlin      #+#    #+#                 */
-/*   Updated: 2021/12/10 15:55:02 by mteerlin      ########   odam.nl         */
+/*   Updated: 2022/01/18 13:44:50 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdr/pushswap.h"
-#include <stdio.h>
 #include <unistd.h>
 
-void	sort_small(t_stack *stk, t_func func, int ab)
+void	hex_sort(t_stk *stk[2])
 {
-	if (!stk || !stk->top || !stk->top->next)
-		return ;
-	while (1)
+	int	size;
+
+	size = stk[A]->size;
+	while (stk[A]->size > 3)
 	{
-		if (stk->top->content > stk->bottom->content)
+		if (stk[A]->top->index < (size - 3))
+			push_stk(stk, B);
+		else if (stk[A]->bot->index < size - 3)
 		{
-			if (stk->top->content < stk->top->next->content)
-				func.rrot[ab](stk);
-			else
-				func.rot[ab](stk);
+			rev_rotate_stk(stk, A);
+			push_stk(stk, B);
 		}
-		else if (stk->top->content > stk->top->next->content || \
-					stk->top->next->content > stk->bottom->content)
-			func.swap[ab](stk);
 		else
-			break ;
+			rotate_stk(stk, A);
 	}
+	tri_sort(stk, SIM);
+	empty_b(stk);
 }
 
-t_stack	sort_stk(t_stack a, t_func func)
+void	sort_stk(t_stk *stk[2])
 {
-	if (a.size <= 3)
-		sort_small(&a, func, A);
+	if (stk[A]->size <= 3)
+		tri_sort(stk, A);
+	else if (stk[A]->size <= 6)
+		hex_sort(stk);
+	else if (stk[A]->size <= 9)
+		nov_sort(stk);
 	else
-		sort_huge(&a, func);
-	return (a);
+		radix_sort(stk);
+	return ;
 }

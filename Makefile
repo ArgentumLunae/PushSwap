@@ -6,7 +6,7 @@
 #    By: mteerlin <mteerlin@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/07/21 12:25:06 by mteerlin      #+#    #+#                  #
-#    Updated: 2021/12/18 15:32:14 by mteerlin      ########   odam.nl          #
+#    Updated: 2022/01/18 10:41:08 by mteerlin      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,28 +27,34 @@ LIBFT_DIR := $(INCL_DIR)libft/
 LIBFT	:= $(LIBFT_DIR)libft.a
 
 AR		?= ar rcs;
-LDFLAGS ?= -fsanitize=address -g
+SANFLAGS ?= -fsanitize=address -g
 CFLAGS	?= -Wall -Wextra -Werror
 
 all: 		$(NAME)
 
 $(NAME):	$(LIBFT) $(OBJ)
-			$(CC) $(LDFLAGS) $(LIBFT) $(OBJ) -o $(NAME)
+			@echo "Compiling push_swap."
+			@$(CC) $(CFLAGS) $(SANFLAGS) $(LIBFT) $(OBJ) -o $(NAME)
+#			@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) -lft -o $(NAME)
+			@echo "Compilation finished."
 
 $(LIBFT):
-			$(MAKE) -C $(LIBFT_DIR) bonus
+			@echo "Making library libft."
+			@$(MAKE) --no-print-directory -C $(LIBFT_DIR) bonus
 
 $(OBJ_DIR)%.o:		$(SRC_DIR)%.c $(HDR_DIR)$(HDR)
 			@mkdir -p $(dir $@)
-			$(CC) -c $< -o $@
+			@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-			rm -f $(OBJ_DIR)*.o $(LIBFT_DIR)*.o $(MLX_DIR)*.o
+			@echo "Removing object files"
+			@rm -f $(OBJ_DIR)*.o $(LIBFT_DIR)*.o
 			@rmdir -p $(OBJ_DIR)
 
 fclean:
-			$(MAKE) clean
-			rm -f $(NAME) $(LIBFT) $(MLX)
+			@$(MAKE) --no-print-directory clean
+			@echo "Removing excecutables"
+			@rm -f $(NAME) $(LIBFT)
 re:
-			$(MAKE) fclean
-			$(MAKE) all
+			@$(MAKE) --no-print-directory fclean
+			@$(MAKE) --no-print-directory all
