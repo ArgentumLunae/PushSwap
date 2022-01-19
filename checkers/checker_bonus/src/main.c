@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/18 14:33:53 by mteerlin      #+#    #+#                 */
-/*   Updated: 2022/01/18 18:21:21 by mteerlin      ########   odam.nl         */
+/*   Updated: 2022/01/19 09:05:36 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,30 @@
 
 #include <stdio.h>
 
-static char	**command_list(char *commands[11])
+static char	**cmnd_list(void)
 {
-	commands[0] = "sa";
-	commands[1] = "sb";
-	commands[2] = "ss";
-	commands[3] = "ra";
-	commands[4] = "rb";
-	commands[5] = "rr";
-	commands[6] = "rra";
-	commands[7] = "rrb";
-	commands[8] = "rrr";
-	commands[9] = "pa";
-	commands[10] = "pb";
-	return (commands);
+	char	**cmnds;
+
+	cmnds = malloc(11 * sizeof(char *));
+	cmnds[0] = "sa";
+	cmnds[1] = "sb";
+	cmnds[2] = "ss";
+	cmnds[3] = "ra";
+	cmnds[4] = "rb";
+	cmnds[5] = "rr";
+	cmnds[6] = "rra";
+	cmnds[7] = "rrb";
+	cmnds[8] = "rrr";
+	cmnds[9] = "pa";
+	cmnds[10] = "pb";
+	return (cmnds);
 }
 
-static t_func	*list_functions(t_func *func)
+static t_func	*list_functions(void)
 {
+	t_func	*func;
+
+	func = malloc(4 * sizeof(t_func));
 	func[0] = &swap_stk;
 	func[1] = &rotate_stk;
 	func[2] = &rev_rotate_stk;
@@ -44,51 +50,37 @@ static t_func	*list_functions(t_func *func)
 	return (func);
 }
 
-static int	validate_command(char *command, char *commands[11])
+static void	print_result(bool sorted, int cmndcnt, t_stk *stk[2])
 {
-	int	cnt;
-	int	len;
-
-	cnt = 0;
-	while (cnt < 11)
-	{
-		len = ft_strlen(commands[cnt]);
-		if (!ft_strncmp(command, commands[cnt], len))
-			return (cnt);
-		cnt++;
-	}
-	return (-1);
+	if (sorted == true && cmndcnt > 0)
+		write(1, "KO\n", 3);
+	else if (is_sorteda(stk[A]))
+		write(1, "OK\n", 3);
+	else
+		write(1, "KO\n", 3);
 }
 
 int	main(int argc, char **argv)
 {
-	char	*command;
-	char	**commands;
+	char	**cmnds;
 	t_func	*func;
 	t_stk	*stk[2];
-	int		commandnr;
+	bool	sorted;
+	int		cmndcnt;
 
 	if (argc < 2)
 		return (1);
-	commands = malloc(11 * sizeof(char *));
-	commands = command_list(commands);
-	func = malloc(4 * sizeof(t_func));
-	func = list_functions(func);
+	cmnds = cmnd_list();
+	func = list_functions();
 	stk[A] = build_stk(argc, argv);
 	stk[B] = init_stk();
-	while (get_next_line(0, &command))
-	{
-		commandnr = validate_command(command, commands);
-		if (commandnr < 0 || commandnr > 10)
-			found_error(1);
-		else
-			func[commandnr / 3](stk, (commandnr % 3));
-	}
+	sorted = false;
 	if (is_sorteda(stk[A]))
-		write(1, "OK\n", 3);
-	else
-		write(1, "KO\n", 3);
-	free (commands);
+		sorted = true;
+	cmndcnt = read_cmnd(cmnds, func, stk);
+	print_result(sorted, cmndcnt, stk);
+	free (cmnds);
 	free(func);
+	stkclear(stk);
 	return (0);
 }

@@ -6,4 +6,5 @@ get_next_line_utils.c \
 main.c \
 parse_stk.c \
 pop_push.c \
+process_command.c \
 utils.c \

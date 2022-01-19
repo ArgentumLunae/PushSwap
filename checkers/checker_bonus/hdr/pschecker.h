@@ -6,7 +6,7 @@
 /*   By: mteerlin <mteerlin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/06 13:33:00 by mteerlin      #+#    #+#                 */
-/*   Updated: 2022/01/18 16:37:27 by mteerlin      ########   odam.nl         */
+/*   Updated: 2022/01/19 09:05:11 by mteerlin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void	rev_rotate_stk(t_stk *stk[2], int type);
 
 t_stk	*build_stk(int argc, char **argv);
 t_stk	*init_stk(void);
-
-void	index_stk(t_stk *stk);
 int		is_sorteda(t_stk *stk);
 int		is_sortedb(t_stk *stk);
+
+int		read_cmnd(char **cmnds, t_func *func, t_stk *stk[2]);
 
 #endif
